@@ -2,8 +2,7 @@
 
 // Add the new header to the original array,
 // and return it.
-function setCookie(e) {
-console.log(e.responseHeaders)
+function setHeader(e) {
 for (var header of e.responseHeaders) {
         if (header.name.toLowerCase() === "x-frame-options") {
           header.value = "ALLOW";
@@ -20,8 +19,12 @@ for (var header of e.responseHeaders) {
 // Listen for onHeaderReceived for the target page.
 // Set "blocking" and "responseHeaders".
 browser.webRequest.onHeadersReceived.addListener(
-  setCookie,
+  setHeader,
   {urls : ["http://*/*", "https://*/*"]},
   ["blocking", "responseHeaders"]
 );
 console.log("Loaded")
+browser.browserAction.onClicked.addListener(function()
+{
+	alert();
+})
