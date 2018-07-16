@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Ignore X-Frame-Options",
+  "version": "1.0",
+  "description": "Allows all sites to be loaded in iframes, despite X-Frame-Options header settings.",
+  "homepage_url": "https://github.com/mdn/webextensions-examples/tree/master/bookmark-it",
+  "icons": {
+    "48": "icons/48.png",
+    "96": "icons/2x.png"
+  },
+
+  "permissions": [
+    "<all_urls>", "webRequest", "webRequestBlocking"]
+  ,
+
+  "browser_action": {
+    "default_icon": "icons/38.png",
+    "default_title": "X-Frame-Options are ignored"
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  }
+
+}
