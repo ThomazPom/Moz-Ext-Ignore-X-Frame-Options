@@ -3,4 +3,4 @@ This repository stores the source code for the Ignore X-Frame-Options Firefox ex
 The extension allows you to load remote content in iframes even if the server disallow framing
 
 # Compatibility
-- Firefox Quantum 61 ~+
+- Firefox Quantum 48+
