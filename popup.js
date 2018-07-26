@@ -13,8 +13,6 @@ window.onload= function()
   txarea = document.querySelector(".listextarea");
   txarea.onkeyup = txarea.onchange = function(){
     regstr = txarea.value.trim()
-    browser.storage.local.set({"regstr": regstr}, function() {
-      myPort.postMessage({updateRegexpes: regstr});
-    });
+    myPort.postMessage({updateRegexpes: regstr}); 
   }
 }
