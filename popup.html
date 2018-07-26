@@ -8,8 +8,10 @@
     	<style type="text/css">
     		body
     		{
+    			width:345px;
     			font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     			background: linear-gradient(to right top, #870000, #a3002b, #af0060, #9b00a4, #122feb);
+    			overflow-x: hidden
     		}
     
 
@@ -352,8 +354,22 @@ a {
 a.btn-small span.btn {
 	height: 30px;
 }
-
-
+.label
+{
+	text-align: center;
+	display: block;
+}
+.listextarea
+{
+	width: 85%;
+	margin-left: 5%;
+	margin-right:  5%;
+	display: block;
+	resize: vertical;
+	word-wrap: normal ;
+	white-space: pre;
+	height: 100px
+}
 
     	</style>  
 <br>
@@ -368,6 +384,13 @@ a.btn-small span.btn {
         <span class="left icon">&nbsp;&nbsp;🧡&nbsp;</span>
       </a>
   </div>
+  	 <div class="content">
+      <span class="label">Whitelist Regexp (1 per line) :</span>
+      <p class="label" id="warning" style="background-color: red"></p>
+      <textarea class="listextarea"></textarea>
+  </div>
+    <script type="text/javascript" src="popup.js"></script>
+  </script>
   <br>
     </body>
 </html>
