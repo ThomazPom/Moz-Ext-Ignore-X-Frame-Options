@@ -10,5 +10,5 @@ The extension allows you to load remote content in iframes even if the server di
 - 1.1 : Initial release
 - 1.2 : [Added regexp based whitelist](https://github.com/ThomazPom/Moz-Ext-Ignore-X-Frame-Options/issues/1)
 
-#Downloads
+# Downloads
 - [Download with firefox](https://addons.mozilla.org/fr/firefox/addon/ignore-x-frame-options-header/)
