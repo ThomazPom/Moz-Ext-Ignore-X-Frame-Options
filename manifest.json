@@ -8,13 +8,6 @@
     "48": "icons/48.png",
     "96": "icons/2x.png"
   },
-
-  "content_scripts":[
-       {
-      "matches": ["<all_urls>"],
-      "js": ["js/jspop.js"]
-    }
-  ],
   "permissions": [
     "<all_urls>", "webRequest", "webRequestBlocking","storage"]
   ,
