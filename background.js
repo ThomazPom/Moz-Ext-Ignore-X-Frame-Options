@@ -22,11 +22,11 @@ function setHeader(e) {
       header.value = "ALLOW";
     }
   }
-  var setMyCookie = {
+  var myHeader = {
     name: "x-frame-options",
     value: "ALLOW"
   };
-  e.responseHeaders.push(setMyCookie);
+  e.responseHeaders.push(myHeader);
   return {responseHeaders: e.responseHeaders};
 }
 // Listen for onHeaderReceived for the target page.
