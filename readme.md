@@ -14,3 +14,13 @@ The extension allows you to load remote content in iframes even if the server di
 
 # Downloads
 - [Download with firefox](https://addons.mozilla.org/fr/firefox/addon/ignore-x-frame-options-header/)
+
+# How To Clone
+
+```
+git clone https://github.com/ThomazPom/Moz-Ext-Ignore-X-Frame-Options/
+````
+# Prerequisite
+
+- No script has to be executed
+- You only need Firefox installed on any platform
