@@ -21,6 +21,10 @@ function setHeader(e) {
     if (header.name.toLowerCase() === "x-frame-options") {
       header.value = "ALLOW";
     }
+    else if(header.name.toLowerCase() === "content-security-policy")
+    {
+      header.value = header.value.replace(/frame-ancestors.*?;/, "frame-ancestors http://*  https://*;")
+    }
   }
   var myHeader = {
     name: "x-frame-options",
