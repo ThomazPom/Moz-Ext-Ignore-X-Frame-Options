@@ -23,7 +23,7 @@ function setHeader(e) {
     }
     else if(header.name.toLowerCase() === "content-security-policy")
     {
-      header.value = header.value.replace(/frame-ancestors.*?;/, "frame-ancestors http://*  https://*;")
+      header.value = header.value.replace(/frame-ancestors[^;]*;?/, "frame-ancestors http://* https://*;")
     }
   }
   var myHeader = {
