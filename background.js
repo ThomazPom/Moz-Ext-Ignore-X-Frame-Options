@@ -31,7 +31,7 @@ function setHeader(e) {
 	});
 		e.responseHeaders.push({
 			name: "content-security-policy",
-			value: val= cspval.includes("frame-ancestors")?
+			value: cspval.includes("frame-ancestors")?
 				cspval.replace(/frame-ancestors[^;]*;?/, "frame-ancestors "+regstr_fancestor+";")
 					:
 				"frame-ancestors "+regstr_fancestor+";"+cspval
