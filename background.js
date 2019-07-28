@@ -18,17 +18,25 @@ function updateRegexpes()
 	});
 }
 function setHeader(e) {
-	var headersdelete = ["x-frame-options","content-security-policy"] 
-	e.responseHeaders= e.responseHeaders.filter(x=>!headersdelete.includes(x.name.toLowerCase()))
+	var headersdelete = ["content-security-policy","x-frame-options"]
+	var cspval="";
+	e.responseHeaders= e.responseHeaders.filter(x=>{
+		var lowername = x.name.toLowerCase();
+		cspval = lowername === headersdelete[0]?x.value:cspval
+		return !headersdelete.includes(lowername)
+	})
 	e.responseHeaders.push({
 		name: "x-frame-options",
 		value: "ALLOW"
 	});
-	e.responseHeaders.push({
-    	name: "content-security-policy",
-    	value: "frame-ancestors "+regstr_fancestor+";"
-  	});
-	return {responseHeaders: e.responseHeaders};
+		e.responseHeaders.push({
+			name: "content-security-policy",
+			value: val= cspval.includes("frame-ancestors")?
+				cspval.replace(/frame-ancestors[^;]*;?/, "frame-ancestors "+regstr_fancestor+";")
+					:
+				"frame-ancestors "+regstr_fancestor+";"+cspval
+	  	}); 	
+  	return {responseHeaders: e.responseHeaders};
 }
 // Listen for onHeaderReceived for the target page.
 // Set "blocking" and "responseHeaders".
