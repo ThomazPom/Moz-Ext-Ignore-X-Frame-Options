@@ -29,13 +29,13 @@ function setHeader(e) {
 		name: "x-frame-options",
 		value: "ALLOW"
 	});
-		e.responseHeaders.push({
-			name: "content-security-policy",
-			value: cspval.includes("frame-ancestors")?
-				cspval.replace(/frame-ancestors[^;]*;?/, "frame-ancestors "+regstr_fancestor+";")
-					:
-				"frame-ancestors "+regstr_fancestor+";"+cspval
-	  	}); 	
+	e.responseHeaders.push({
+		name: "content-security-policy",
+		value: cspval.includes("frame-ancestors")?
+			cspval.replace(/frame-ancestors[^;]*;?/, "frame-ancestors "+regstr_fancestor+";")
+				:
+			"frame-ancestors "+regstr_fancestor+";"+cspval
+  	}); 	
   	return {responseHeaders: e.responseHeaders};
 }
 // Listen for onHeaderReceived for the target page.
