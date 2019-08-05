@@ -1,5 +1,5 @@
 var defaultRgx =  ["http://*/*", "https://*/*"].join('\n')
-var defaultRgx_fancestor =  ["http://*", "https://*"].join('\n')
+var defaultRgx_fancestor =  ["http://*", "https://*", "file://*"].join('\n')
 
 var myPort = browser.runtime.connect({name:"port-from-cs"});
 
