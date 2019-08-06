@@ -10,10 +10,11 @@
     		{
     			width:345px;
     			font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-    			background: linear-gradient(to right top, #870000, #a3002b, #af0060, #9b00a4, #122feb);
-    			overflow-x: hidden
+    			overflow-x: hidden;
+    			background: url("bg.jpg");
+				background-size: cover;
     		}
-    
+
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 	margin: 0;
@@ -65,7 +66,6 @@ body {
 }
 
 .container {
-	background: url(https://pcbx.us/bexy.jpg);
 	padding-top: 20px;
 	height: 100%;
 	width: 100%;
@@ -119,6 +119,7 @@ a {
 	border-radius: 6px 0 0 6px;
 	-moz-border-radius: 6px 0 0 6px;
 	-webkit-border-radius: 6px 0 0 6px;
+  width: 40px;
 }
 
 .btn span.right {
@@ -126,6 +127,7 @@ a {
 	border-radius: 0 6px 6px 0;
 	-moz-border-radius: 0 6px 6px 0;
 	-webkit-border-radius: 0 6px 6px 0;
+  width: 40px;
 }
 
 .btn span.icon {
@@ -256,8 +258,19 @@ a.btn-small span.btn {
 }
 .label
 {
-	text-align: center;
-	display: block;
+text-shadow: 0px 0px 6px black;
+
+background: rgba(0,0,0,.1);
+
+margin-left: auto;
+margin-right: auto;
+margin-top:10px;
+border-top-left-radius: 5px;
+
+border-top-right-radius: 5px;
+display: table;
+
+padding: 10px 20px 0px 20px;
 }
 .listextarea, .listextarea_fancestor
 {
@@ -271,29 +284,29 @@ a.btn-small span.btn {
 	height: 100px
 }
 
-    	</style>  
+    	</style>
 <br>
     	 <div class="content">
       <a href="https://github.com/ThomazPom/Moz-Ext-Ignore-X-Frame-Options" class="btn left">
         <span style="color:orange" class="left icon">&lt; /&gt;</span>
         <span class="right title"><span class="arrow-right"></span>Sources & Updates</span>
       </a>
-  </div>	
+  </div>
    <div class="content">
-      <a href="https://www.paypal.me/ThomazPom" class="btn left">
-        <span  class="right title"><span class="arrow-right"></span>Donate</span>
-        <span class="left icon">&nbsp;&nbsp;🧡&nbsp;</span>
+      <a href="https://www.paypal.me/ThomazPom" class="btn right">
+        <span  class="left title"><span class="arrow-left"></span>Donate</span>
+        <span class="right icon">🧡</span>
       </a>
-  </div>  
+  </div>
   <div class="content">
       <a href="https://addons.mozilla.org/fr/firefox/addon/ignore-x-frame-options-header/" class="btn left">
         <span  class="right title"><span class="arrow-right"></span>Rate & About</span>
-        <span class="left icon">&nbsp;&nbsp;⭐&nbsp;</span>
+        <span class="left icon">⭐</span>
       </a>
   </div>
   	 <div class="content">
       <span class="label">Whitelist Regexp (1 per line) :</span>
-      <p class="label" id="warning" style="background-color: red"></p>
+      <p id="warning" style="background-color: red"></p>
       <textarea class="listextarea"></textarea>
   </div>
   <div class="content">
