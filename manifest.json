@@ -1,21 +1,20 @@
 {
   "manifest_version": 2,
-  "name": "Monitor Outgoing Requests",
-  "version": "1.0",
-  "description": "Allows you to monitor outgoing requests",
-  "homepage_url": "https://github.com/ThomazPom/Moz-Ext-Monitor-Outgoing-Requests/",
+  "name": "Ignore X-Frame-Options",
+  "version": "1.5.3",
+  "description": "Allows all sites to be loaded in iframes, despite X-Frame-Options header settings.",
+  "homepage_url": "https://github.com/ThomazPom/Moz-Ext-Ignore-X-Frame-Options",
   "icons": {
     "48": "icons/48.png",
     "96": "icons/2x.png"
   },
   "permissions": [
-    "<all_urls>","tabs","webNavigation", "webRequest", "webRequestBlocking","storage","unlimitedStorage"
-]
+    "<all_urls>", "webRequest", "webRequestBlocking","storage"]
   ,
 
   "browser_action": {
     "default_icon": "icons/38.png",
-    "default_title": "Requests are monitored",
+    "default_title": "X-Frame-Options are ignored",
   
         "default_popup": "popup.html"
   },
