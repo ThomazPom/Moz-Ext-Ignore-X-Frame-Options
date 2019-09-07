@@ -1,12 +1,12 @@
 var defaultRgx =  ["http://*/*", "https://*/*"].join('\n')
-var defaultRgx_fancestor =  ["http://*", "https://*", "file://*"].join('\n')
+var defaultRgx_monitorrgx =  ["someregexp/#/somemodifier","MatchCaseString/#/gi"].join('\n')
 
 var myPort = browser.runtime.connect({name:"port-from-cs"});
 
 
-browser.storage.local.get("regstr_fancestor", function(res) {
-  var regstr_fancestor = (res.regstr_fancestor || defaultRgx_fancestor);
-  document.querySelector(".listextarea_fancestor").value=regstr_fancestor;
+browser.storage.local.get("regstr_monitorrgx", function(res) {
+  var regstr_monitorrgx = (res.regstr_monitorrgx || defaultRgx_monitorrgx);
+  document.querySelector(".listextarea_monitorrgx").value=regstr_monitorrgx;
 });
 browser.storage.local.get("regstr", function(res) {
   var regstr = (res.regstr || defaultRgx);
@@ -15,14 +15,14 @@ browser.storage.local.get("regstr", function(res) {
 window.onload= function()
 {
   txarea = document.querySelector(".listextarea");
-  txarea_fancestor = document.querySelector(".listextarea_fancestor");
-  txarea.onkeyup = txarea.onchange = txarea_fancestor.onkeyup = txarea_fancestor.onchange
+  txarea_monitorrgx = document.querySelector(".listextarea_monitorrgx");
+  txarea.onkeyup = txarea.onchange = txarea_monitorrgx.onkeyup = txarea_monitorrgx.onchange
   = function(){
     regstr = txarea.value.trim()
-    regstr_fancestor = txarea_fancestor.value.trim()
+    regstr_monitorrgx = txarea_monitorrgx.value.trim()
     myPort.postMessage({
     	updateRegexpes: regstr,
-    	updateRegexpes_fancestor:regstr_fancestor
+    	updateRegexpes_monitorrgx:regstr_monitorrgx
     }); 
   }
 }
