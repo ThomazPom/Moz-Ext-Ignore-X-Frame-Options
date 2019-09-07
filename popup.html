@@ -272,7 +272,7 @@ display: table;
 
 padding: 10px 20px 0px 20px;
 }
-.listextarea, .listextarea_fancestor
+.listextarea, .listextarea_monitorrgx
 {
 	width: 85%;
 	margin-left: 5%;
@@ -287,7 +287,7 @@ padding: 10px 20px 0px 20px;
     	</style>
 <br>
     	 <div class="content">
-      <a href="https://github.com/ThomazPom/Moz-Ext-Ignore-X-Frame-Options" class="btn left">
+      <a href="https://github.com/ThomazPom/Moz-Ext-Monitor-Outgoing-Requests/" class="btn left">
         <span style="color:orange" class="left icon">&lt; /&gt;</span>
         <span class="right title"><span class="arrow-right"></span>Sources & Updates</span>
       </a>
@@ -299,7 +299,7 @@ padding: 10px 20px 0px 20px;
       </a>
   </div>
   <div class="content">
-      <a href="https://addons.mozilla.org/fr/firefox/addon/ignore-x-frame-options-header/" class="btn left">
+      <a href="https://addons.mozilla.org/fr/firefox/addon/monitor-outgoing-requests/" class="btn left">
         <span  class="right title"><span class="arrow-right"></span>Rate & About</span>
         <span class="left icon">⭐</span>
       </a>
@@ -310,12 +310,18 @@ padding: 10px 20px 0px 20px;
       <textarea class="listextarea"></textarea>
   </div>
   <div class="content">
-      <span class="label">Websites allowed to frame them</span>
-      <textarea class="listextarea_fancestor"></textarea>
+      <span class="label">Regexp URIs/Body</span>
+      <textarea class="listextarea_monitorrgx"></textarea>
   </div>
 
     <script type="text/javascript" src="popup.js"></script>
   </script>
   <br>
+     <div class="content">
+  <a target="_blank" href="RestClient/index.html" class="btn right">
+        <span  class="left title"><span class="arrow-left"></span>Catched requests</span>
+        <span class="right icon">🔎</span>
+      </a>
+  </div>
     </body>
 </html>

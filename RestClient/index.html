@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap.css"  crossorigin="anonymous">
+<link href="select2.css" rel="stylesheet" />
+    <title>RequestEditor</title>
+  </head>
+  <body>
+    <style type="text/css">
+        .hide{
+          display: none;
+        }
+        iframe, html,body,pre{
+            background:white;
+            color: black;
+        }
+        pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }
+
+    </style>
+
+    <div class="container">
+    <h1>Request Editor</h1>
+
+
+<div class="alert alert-primary" role="alert">
+    <h4>[-] Request</h4>
+    <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="methodselect">Method</label>
+  </div>
+  <select class="custom-select" id="methodselect">
+    <option selected value="GET">GET</option>
+    <option value="PUT">PUT</option>
+    <option value="POST">POST</option>
+    <option value="DELETE">DELETE</option>
+    <option value="HEAD">HEAD</option>
+  </select>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" >Request URL</span>
+  </div>
+  <input type="text" class="form-control" id="urlinput" aria-describedby="basic-addon3">
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Request body</span>
+    <span class="input-group-text"  style="display: inline;">
+      <div>Raw</div>
+
+<div><input id='rawbody' type="checkbox"></div>
+    </span>
+  </div>
+  <div style="width:60%" class="hide">
+  <textarea class="form-control"   style="width:100%" id="bodyinput" aria-label="Wit"></textarea>
+</div>
+<div class="form-control" style="height: auto;background: none" >
+<select  id="formdata-select" class="mb-3"  multiple="multiple">
+</select>
+ <div class="row">
+    <div class="col col-4">
+        <input list="formdata-key" value="" class="custom-select">
+<datalist id="formdata-key">
+
+</datalist>
+     
+</div>
+<div class="col col-4">
+         <input list="formdata-val" value="" class="custom-select">
+<datalist id="formdata-val">
+
+</datalist>
+</div>
+ <div  class="col col-2">
+    <button class="btn btn-outline-primary addbutton"  data-target="formdata" type="button" id="button-add">Add</button>
+
+
+</div>
+</div>
+
+</div>
+
+    <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect02">Headers</label>
+  </div>
+<select id="header-select" multiple="multiple">
+</select>
+</div>
+  <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect02">Add +</label>
+ <div class="row">
+    <div class="col col-6">
+             <input list="header-key" value="" class="custom-select">
+<datalist id="header-key">
+
+</datalist>
+ 
+</div>
+<div class="col col-6">
+               <input list="header-val" value="" class="custom-select">
+<datalist id="header-val">
+
+</datalist>
+</div>
+</div>
+ <div class="input-group-append">
+    <button class="btn btn-outline-primary addbutton" data-target="header" type="button" id="button-add2">Add</button>
+  </div>
+ </div>
+</div>
+  <button class="btn btn-outline-primary sendbutton" type="button" id="button-send">Send</button>
+  
+
+
+
+
+</div>
+    </div>
+
+<div class="alert alert-success"> 
+  
+  <h4>[-] Response</h4>
+
+<div>
+  
+
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="response-tab" data-toggle="tab" href="#response" role="tab" aria-controls="response" aria-selected="true">Response</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="preview-tab" data-toggle="tab" href="#preview" role="tab" aria-controls="preview" aria-selected="false">Preview</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="response" role="tabpanel" aria-labelledby="response-tab">
+    <pre id="resultpre">
+      
+    </pre>
+
+
+  </div>
+  <div class="tab-pane fade" id="preview" role="tabpanel" aria-labelledby="preview-tab">
+    
+    <iframe style="height: 50vh;width: 100%" class="preview1" src="https://google.com"></iframe>
+
+
+  </div>
+</div>
+
+</div>
+
+</div>
+    
+<h4>[-] Catched requests : <button class=" btn btn-primary clearcatchedbutton">Clear</button></h4>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="jquery-3.js"  crossorigin="anonymous"></script>
+    <script src="jquery-md5.js"  crossorigin="anonymous"></script>
+    <script src="popper.js"  crossorigin="anonymous"></script>
+    <script src="bootstrap.js"  crossorigin="anonymous"></script>
+<script src="select2.js"></script>
+    <script src="HtmlSanitizer.js"  crossorigin="anonymous"></script>
+
+    <script src="index.js"  crossorigin="anonymous"></script>
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Method</th>
+      <th scope="col">URL</th>
+      <th scope="col">Date</th>
+      <th scope="col">Match</th>
+      <th scope="col">Detail</th>
+      <th scope="col">Replay</th>
+    </tr>
+  </thead>
+  <tbody>
+          <tr class="base">
+     
+      
+      <td class="num"></td>
+      <td class="method">method</td>
+      <td class="url">URL</td>
+      <td class="date">Date</td>
+      <td class="match">Match</td>
+      <td class="detail"><button class="btn btn-primary detailrequestbutton">Detail</button></td>
+      <td class="replay"><button class="btn btn-primary replayrequestbutton">Replay</button></td>
+    </tr>
+
+  </tbody>
+</table>
+
+
+<div class="modal fade bd-detail-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    
+      </div>
+          </div>
+          
+  </div>
+</div>
+  </body>
+</html>
