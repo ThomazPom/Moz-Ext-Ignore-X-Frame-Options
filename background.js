@@ -6,6 +6,9 @@ function updateRegexpes()
 	browser.storage.local.get("regstr_fancestor", function(res) {
 		regstr_fancestor = (res.regstr_fancestor || defaultRgx_fancestor).split("\n").join(" ");
 	});
+	browser.storage.local.get("appendrather", function(res) {
+		appendrather = res.appendrather;
+	});
 	browser.storage.local.get("regstr", function(res) {
 		var  regstr = (res.regstr || defaultRgx);
 		var regexpesarray = regstr.split("\n");
@@ -25,16 +28,23 @@ function setHeader(e) {
 		cspval = lowername === headersdelete[0]?x.value:cspval
 		return !headersdelete.includes(lowername)
 	})
-	e.responseHeaders.push({
-		name: "x-frame-options",
-		value: "ALLOW"
-	});
+	if(!appendrather)
+	{
+		e.responseHeaders.push({
+			name: "x-frame-options",
+			value: "ALLOW"
+		});
+	}
 	e.responseHeaders.push({
 		name: "content-security-policy",
-		value: cspval.includes("frame-ancestors")?
-			cspval.replace(/frame-ancestors[^;]*;?/, "frame-ancestors "+regstr_fancestor+";")
-				:
-			"frame-ancestors "+regstr_fancestor+";"+cspval
+		value: cspval.includes("frame-ancestors")?(
+			appendrather?
+			cspval.replace(/frame-ancestors /, "frame-ancestors "+regstr_fancestor+" ")
+			:
+			cspval.replace(/frame-ancestors[^;]*;?/, "frame-ancestors "+regstr_fancestor+";"))
+			:
+			"frame-ancestors * "+(appendrather?regstr_fancestor:"")+";"
+			+cspval
   	}); 	
   	return {responseHeaders: e.responseHeaders};
 }
@@ -55,7 +65,14 @@ function connected(p) {
 					browser.storage.local.set(
 					{
 						"regstr_fancestor":m.updateRegexpes_fancestor
-					},updateRegexpes);		
+					},()=>{
+						browser.storage.local.set(
+					{
+						"appendrather":m.appendrather
+					},
+						updateRegexpes);
+
+					})		
 				}
 			);
 		}		
