@@ -1,26 +1,38 @@
-var defaultRgx =  ["http://*/*", "https://*/*"].join('\n')
-var defaultRgx_fancestor =  ["http://*","http://*:*", "https://*","https://*:*", "file://*"].join('\n')
-
+var defaultRgx =  ["<all_urls>"].join('\n')
 function updateRegexpes()
 {
-	browser.storage.local.get("regstr_fancestor", function(res) {
-		regstr_fancestor = (res.regstr_fancestor || defaultRgx_fancestor).split("\n").join(" ");
-	});
-	browser.storage.local.get("appendrather", function(res) {
-		appendrather = res.appendrather;
-	});
 	browser.storage.local.get("regstr", function(res) {
 		var  regstr = (res.regstr || defaultRgx);
 		var regexpesarray = regstr.split("\n");
-		browser.webRequest.onHeadersReceived.removeListener(setHeader)
+		watch_tabs  = []
+		browser.webRequest.onBeforeRequest.removeListener(monitorBeforeRequest)
+		browser.webRequest.onBeforeRequest.addListener(
+			monitorBeforeRequest,
+			{urls : regexpesarray},[]
+		);
+
 		browser.webRequest.onHeadersReceived.addListener(
 			setHeader,
-			{urls : regexpesarray},
+			{urls :   ["<all_urls>"]},
 			["blocking", "responseHeaders"]
 		);
 	});
 }
+
+var watch_tabs  = []
+function monitorBeforeRequest(e) {
+
+	if(watch_tabs.includes(e.tabId) || e.frameId)
+	{
+		return;
+	}
+	watch_tabs.push(e.tabId)
+}
 function setHeader(e) {
+	if(!e.frameId && !watch_tabs.includes(e.tabId))
+	{
+  		return {responseHeaders: e.responseHeaders};	
+	}
 	var headersdelete = ["content-security-policy","x-frame-options"]
 	var cspval="";
 	e.responseHeaders= e.responseHeaders.filter(x=>{
@@ -28,28 +40,19 @@ function setHeader(e) {
 		cspval = lowername === headersdelete[0]?x.value:cspval
 		return !headersdelete.includes(lowername)
 	})
-	if(!appendrather)
-	{
-		e.responseHeaders.push({
-			name: "x-frame-options",
-			value: "ALLOW"
-		});
-	}
+	//e.responseHeaders.push({
+	//	name: "x-frame-options",
+	//	value: "ALLOW"
+	//});
 	e.responseHeaders.push({
 		name: "content-security-policy",
-		value: cspval.includes("frame-ancestors")?(
-			appendrather?
-			cspval.replace(/frame-ancestors /, "frame-ancestors "+regstr_fancestor+" ")
-			:
-			cspval.replace(/frame-ancestors[^;]*;?/, "frame-ancestors "+regstr_fancestor+";"))
-			:
-			"frame-ancestors * "+(appendrather?regstr_fancestor:"")+";"
-			+cspval
+		value: cspval.includes("frame-ancestors")?
+			cspval.replace(/frame-ancestors[^;]*;?/, "frame-ancestors *;")
+				:
+			"frame-ancestors *;"+cspval
   	}); 	
   	return {responseHeaders: e.responseHeaders};
 }
-// Listen for onHeaderReceived for the target page.
-// Set "blocking" and "responseHeaders".
 updateRegexpes();
 var portFromCS;
 function connected(p) {
@@ -60,19 +63,6 @@ function connected(p) {
 			browser.storage.local.set(
 				{
 					"regstr":m.updateRegexpes,
-				},
-				()=>{
-					browser.storage.local.set(
-					{
-						"regstr_fancestor":m.updateRegexpes_fancestor
-					},()=>{
-						browser.storage.local.set(
-					{
-						"appendrather":m.appendrather
-					},
-						updateRegexpes);
-
-					})		
 				}
 			);
 		}		
