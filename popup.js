@@ -13,7 +13,7 @@ window.onload= function()
   
 txarea.onkeyup = txarea.onchange
   = function(){
-    regstr = txarea.value.trim()
+  	regstr = txarea.value.trim()
     myPort.postMessage({
     	updateRegexpes: regstr
     }); 
