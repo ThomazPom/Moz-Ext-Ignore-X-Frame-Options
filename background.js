@@ -1,8 +1,8 @@
-var defaultRgx =  ["<all_urls>"].join('\n')
+var defaultRgx =  ["<all_urls>","*://*/*","https://*.w3schools.com/*"].join('\n')
 function updateRegexpes()
 {
-	browser.storage.local.get("regstr_fancestor", function(res) {
-		var  regstr = (res.regstr_fancestor || defaultRgx);
+	browser.storage.local.get("regstr_allowed", function(res) {
+		var  regstr = (res.regstr_allowed || defaultRgx);
 		var regexpesarray = regstr.split("\n");
 		watch_tabs  = []
 		browser.webRequest.onBeforeRequest.removeListener(monitorBeforeRequest)
@@ -22,17 +22,21 @@ function updateRegexpes()
 var watch_tabs  = []
 function monitorBeforeRequest(e) {
 
-	if(watch_tabs.includes(e.tabId) || e.frameId)
+	if(watch_tabs.includes(e.tabId) || watch_tabs.includes(e.frameId) )
 	{
-		return;
+//		console.log(1,e.frameId,e.tabId,watch_tabs,e.url,e.originUrl)
+			return;
 	}
-	watch_tabs.push(e.tabId)
+	watch_tabs.push(e.frameId || e.tabId)
 }
 function setHeader(e) {
-	if(!e.frameId || !watch_tabs.includes(e.tabId))
+	if(!e.frameId || !watch_tabs.includes(e.parentFrameId || e.tabId))
 	{
+//		console.log(2,e.frameId,e.tabId,e.parentFrameId,watch_tabs,e.url,e.originUrl)
   		return {responseHeaders: e.responseHeaders};	
 	}
+
+		console.log(3,e.frameId,e.tabId,watch_tabs)
 	var headersdo = {
 		"content-security-policy":(x=>{
 			x.value = x.value.includes("frame-ancestors")?
@@ -57,7 +61,7 @@ function connected(p) {
 		{
 			browser.storage.local.set(
 				{
-					"regstr_fancestor":m.updateRegexpes,
+					"regstr_allowed":m.updateRegexpes,
 				}
 				,updateRegexpes // callback
 			);
