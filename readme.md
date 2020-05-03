@@ -12,6 +12,7 @@ The extension allows you to load remote content in iframes even if the server di
 - 1.3 : Minor fixes
 - 1.4 : Added frame-ancestor support
 - 1.5 : [Added parent domain whitelist](https://github.com/ThomazPom/Moz-Ext-Ignore-X-Frame-Options/issues/4)
+- 1.6 : Bugs and architectural issues fixes
 
 # Downloads
 - [Download with firefox](https://addons.mozilla.org/fr/firefox/addon/ignore-x-frame-options-header/)
