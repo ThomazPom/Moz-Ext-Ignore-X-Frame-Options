@@ -1,8 +1,8 @@
 var defaultRgx =  ["<all_urls>"].join('\n')
 function updateRegexpes()
 {
-	browser.storage.local.get("regstr", function(res) {
-		var  regstr = (res.regstr || defaultRgx);
+	browser.storage.local.get("regstr_fancestor", function(res) {
+		var  regstr = (res.regstr_fancestor || defaultRgx);
 		var regexpesarray = regstr.split("\n");
 		watch_tabs  = []
 		browser.webRequest.onBeforeRequest.removeListener(monitorBeforeRequest)
@@ -29,7 +29,6 @@ function monitorBeforeRequest(e) {
 	watch_tabs.push(e.tabId)
 }
 function setHeader(e) {
-	console.log(e,watch_tabs)
 	if(!e.frameId || !watch_tabs.includes(e.tabId))
 	{
   		return {responseHeaders: e.responseHeaders};	
@@ -47,7 +46,6 @@ function setHeader(e) {
 		var a_filter=headersdo[x.name.toLowerCase()];
 		return a_filter?a_filter(x):true;
 	})
-	console.log(e.responseHeaders);
   	return {responseHeaders: e.responseHeaders};
 }
 updateRegexpes();
@@ -59,7 +57,7 @@ function connected(p) {
 		{
 			browser.storage.local.set(
 				{
-					"regstr":m.updateRegexpes,
+					"regstr_fancestor":m.updateRegexpes,
 				}
 				,updateRegexpes // callback
 			);
@@ -67,3 +65,4 @@ function connected(p) {
 	});
 }
 browser.runtime.onConnect.addListener(connected);
+console.log("LOADED");

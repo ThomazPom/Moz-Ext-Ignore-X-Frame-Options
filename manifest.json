@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Ignore X-Frame-Options",
-  "version": "1.5.5",
+  "version": "1.5.8",
   "description": "Allows all sites to be loaded in iframes, despite X-Frame-Options header settings.",
   "homepage_url": "https://github.com/ThomazPom/Moz-Ext-Ignore-X-Frame-Options",
   "icons": {
