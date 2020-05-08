@@ -1,22 +1,29 @@
 var defaultRgx =  ["<all_urls>","*://*/*","https://*.w3schools.com/*"].join('\n')
 function updateRegexpes()
 {
-	browser.storage.local.get("regstr_allowed", function(res) {
+	browser.storage.local.get(null, function(res) {
 		var  regstr = (res.regstr_allowed || defaultRgx);
-		console.log(regstr);
 		var regexpesarray = regstr.split("\n");
 		watch_tabs  = new Set();
-		browser.webRequest.onBeforeRequest.removeListener(monitorBeforeRequest)
-		browser.webRequest.onBeforeRequest.addListener(
-			monitorBeforeRequest,
-			{urls : regexpesarray},[]
-		);
 
-		browser.webRequest.onHeadersReceived.addListener(
-			setHeader,
-			{urls :   ["<all_urls>"]},
-			["blocking", "responseHeaders"]
-		);
+
+		browser.webRequest.onBeforeRequest.removeListener(monitorBeforeRequest)
+		
+		if(!res.is_disabled)
+		{
+
+			browser.webRequest.onBeforeRequest.addListener(
+				monitorBeforeRequest,
+				{urls : regexpesarray},[]
+			);
+
+			browser.webRequest.onHeadersReceived.addListener(
+				setHeader,
+				{urls :   ["<all_urls>"]},
+				["blocking", "responseHeaders"]
+			);
+
+		}
 	});
 }
 
@@ -49,15 +56,7 @@ var portFromCS;
 function connected(p) {
 	portFromCS = p;
 	portFromCS.onMessage.addListener(function(m) {
-		if(m.updateRegexpes)
-		{
-			browser.storage.local.set(
-				{
-					"regstr_allowed":m.updateRegexpes,
-				}
-				,updateRegexpes // callback
-			);
-		}		
+			browser.storage.local.set(m,updateRegexpes);
 	});
 }
 browser.runtime.onConnect.addListener(connected);
