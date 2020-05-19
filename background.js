@@ -6,8 +6,8 @@ function updateRegexpes()
 		var regexpesarray = regstr.split("\n");
 		watch_tabs  = new Set();
 
-
 		browser.webRequest.onBeforeRequest.removeListener(monitorBeforeRequest)
+		browser.webRequest.onHeadersReceived.removeListener(setHeader)
 		
 		if(!res.is_disabled)
 		{
