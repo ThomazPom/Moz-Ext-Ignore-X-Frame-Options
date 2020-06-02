@@ -37,18 +37,14 @@ function setHeader(e) {
   		return {responseHeaders: e.responseHeaders};	
 	}
 	var headersdo = {
-		"content-security-policy":(x=>{
-			x.value = x.value.includes("frame-ancestors")?
-			x.value.replace(/frame-ancestors[^;]*;?/, "frame-ancestors *;")
-			:"frame-ancestors *;"+x.value
-			return true;
-		}),
+		"content-security-policy":(x=>{return false;}),
 		"x-frame-options":(x=>{return false})
 	}
 	e.responseHeaders= e.responseHeaders.filter(x=>{
 		var a_filter=headersdo[x.name.toLowerCase()];
 		return a_filter?a_filter(x):true;
 	})
+	console.log(e)
   	return {responseHeaders: e.responseHeaders};
 }
 updateRegexpes();
