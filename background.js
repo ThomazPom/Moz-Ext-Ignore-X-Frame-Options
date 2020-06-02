@@ -37,7 +37,7 @@ function setHeader(e) {
   		return {responseHeaders: e.responseHeaders};	
 	}
 	var headersdo = {
-		"content-security-policy":(x=>{return false;}),
+		"content-security-policy":(x=>{return false}),
 		"x-frame-options":(x=>{return false})
 	}
 	e.responseHeaders= e.responseHeaders.filter(x=>{
