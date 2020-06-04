@@ -40,11 +40,7 @@ function setHeader(e) {
 		"content-security-policy":(x=>{return false}),
 		"x-frame-options":(x=>{return false})
 	}
-	e.responseHeaders= e.responseHeaders.filter(x=>{
-		var a_filter=headersdo[x.name.toLowerCase()];
-		return a_filter?a_filter(x):true;
-	})
-	console.log(e)
+	e.responseHeaders= e.responseHeaders.filter(x=>(headersdo[x.name.toLowerCase()]||Array)())
   	return {responseHeaders: e.responseHeaders};
 }
 updateRegexpes();
