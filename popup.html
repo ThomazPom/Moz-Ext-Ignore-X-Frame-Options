@@ -59,7 +59,6 @@ body, html {
 }
 
 #disable_webext:checked+label>span{
- 
     border: solid crimson 3px;
     background-color: red;
 }
@@ -71,14 +70,15 @@ body, html {
 	content:'disabled';
 }
 #disable_webext+label>span{
+
+	cursor: pointer;
     background-color: #0ebf0e;
     border-radius: 50px;
     color: white;
     padding: 1px 1px 1px 1px;
     border: solid green 3px;
     text-align:center;
-    
-display:inline-block;
+    display:inline-block;
     width:100px;
 
 }
@@ -314,6 +314,7 @@ padding: 10px 20px 0px 20px;
 .label-after
 {
 	display: block;
+	cursor: pointer;
 	font-size: 14px;
 	padding: 0px 20px 0px 20px;
 	text-align: center;
