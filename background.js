@@ -1,4 +1,5 @@
 var defaultRgx =  ["<all_urls>","*://*/*","https://*.w3schools.com/*"].join('\n')
+var watch_tabs  = new Set();
 function updateRegexpes()
 {
 	browser.storage.local.get(null, function(res) {
@@ -11,7 +12,6 @@ function updateRegexpes()
 		
 		if(!res.is_disabled)
 		{
-
 			browser.webRequest.onBeforeRequest.addListener(
 				monitorBeforeRequest,
 				{urls : regexpesarray},[]
@@ -22,12 +22,9 @@ function updateRegexpes()
 				{urls :   ["<all_urls>"]},
 				["blocking", "responseHeaders"]
 			);
-
 		}
 	});
 }
-
-var watch_tabs  = new Set();
 function monitorBeforeRequest(e) {
 	watch_tabs.add(e.frameId || e.tabId)
 }
@@ -40,7 +37,7 @@ function setHeader(e) {
 		"content-security-policy":(x=>{return false}),
 		"x-frame-options":(x=>{return false})
 	}
-	e.responseHeaders= e.responseHeaders.filter(x=>(headersdo[x.name.toLowerCase()]||Array)())
+	e.responseHeaders=e.responseHeaders.filter(x=>(headersdo[x.name.toLowerCase()]||Array)())
   	return {responseHeaders: e.responseHeaders};
 }
 updateRegexpes();

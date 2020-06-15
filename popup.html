@@ -310,15 +310,29 @@ display: table;
 
 padding: 10px 20px 0px 20px;
 }
+
+.label-after
+{
+	display: block;
+	font-size: 14px;
+	padding: 0px 20px 0px 20px;
+	text-align: center;
+	margin-top: 0px;
+	margin-left: 5%;
+	margin-right:  5%;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
 .label-standalone
 {
-
-border-radius: 5px;
-padding: 10px 20px 10px 20px;	
+	border-radius: 5px;
+	padding: 10px 20px 10px 20px;	
 }
 .listextarea, .listextarea_fancestor
 {
-	width: 85%;
+	width: 89%;
 	margin-left: 5%;
 	margin-right:  5%;
 	display: block;
@@ -354,7 +368,8 @@ padding: 10px 20px 10px 20px;
       <p id="warning" style="background-color: red"></p>
 
       <textarea class="listextarea"></textarea>
-
+      <a class="label label-after"><span id="reset">Reset default config</span></span>
+      
       <a class="label label-standalone" href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Match_patterns">&gt;Match patterns reference&lt;<br/></a>
       <div class="label  label-standalone">
 		      	

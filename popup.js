@@ -22,4 +22,11 @@ window.onload= function()
     }); 
 
   }
+  document.querySelector("#reset").onclick=x=>{
+    if(confirm("Config will be reset to\n"+defaultRgx))
+      {
+        txarea.value=defaultRgx;
+        txarea.onchange();
+      }
+  }
 }
