@@ -1,43 +1,36 @@
 var defaultRgx =  ["<all_urls>","*://*/*","https://*.w3schools.com/*"].join('\n')
-var watch_tabs  = new Set();
+var theRegex = null;
+var headersdo = {
+		"content-security-policy":(x=>{return false}),
+		"x-frame-options":(x=>{return false})
+	}
+
 function updateRegexpes()
 {
 	browser.storage.local.get(null, function(res) {
 		var  regstr = (res.regstr_allowed || defaultRgx);
-		var regexpesarray = regstr.split("\n");
-		watch_tabs  = new Set();
-
-		browser.webRequest.onBeforeRequest.removeListener(monitorBeforeRequest)
 		browser.webRequest.onHeadersReceived.removeListener(setHeader)
-		
 		if(!res.is_disabled)
 		{
-			browser.webRequest.onBeforeRequest.addListener(
-				monitorBeforeRequest,
-				{urls : regexpesarray},[]
-			);
-
+			theRegex = new RegExp(
+				regstr.split("\n").map(
+					x=>x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')	// Sanitize regex
+						.replace(/(^<all_urls>|\\\*)/g,"(.*?)")	// Allow wildcards
+						.replace(/^(.*)$/g,"^$1$")).join("|")	// User multi match
+				)
 			browser.webRequest.onHeadersReceived.addListener(
 				setHeader,
-				{urls :   ["<all_urls>"]},
+				{urls :["<all_urls>"], types:["sub_frame"]},
 				["blocking", "responseHeaders"]
 			);
 		}
 	});
 }
-function monitorBeforeRequest(e) {
-	watch_tabs.add(e.frameId || e.tabId)
-}
 function setHeader(e) {
-	if(!e.frameId || !watch_tabs.has(e.parentFrameId || e.tabId))
+	if(e.frameAncestors[0].url.match(theRegex))
 	{
-  		return {responseHeaders: e.responseHeaders};	
+		e.responseHeaders=e.responseHeaders.filter(x=>(headersdo[x.name.toLowerCase()]||Array)())
 	}
-	var headersdo = {
-		"content-security-policy":(x=>{return false}),
-		"x-frame-options":(x=>{return false})
-	}
-	e.responseHeaders=e.responseHeaders.filter(x=>(headersdo[x.name.toLowerCase()]||Array)())
   	return {responseHeaders: e.responseHeaders};
 }
 updateRegexpes();
