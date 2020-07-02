@@ -8,7 +8,7 @@
     "96": "icons/2x.png"
   },
   "permissions": [
-    "<all_urls>", "webRequest", "webRequestBlocking","storage","webNavigation"]
+     "webRequest", "webRequestBlocking","storage","webNavigation"]
   ,
 
   "browser_action": {
