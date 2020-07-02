@@ -1,15 +1,17 @@
 var defaultRgx =  ["<all_urls>","*://*/*","https://*.w3schools.com/*"].join('\n')
 var theRegex = null;
+var allowedFrames={};
 var headersdo = {
-		"content-security-policy":(x=>{return false}),
-		"x-frame-options":(x=>{return false})
-	}
+	"content-security-policy":(x=>{return false}),
+	"x-frame-options":(x=>{return false})
+}
 
 function updateRegexpes()
 {
-	browser.storage.local.get(null, function(res) {
+	chrome.storage.local.get(null, function(res) {
 		var  regstr = (res.regstr_allowed || defaultRgx);
-		browser.webRequest.onHeadersReceived.removeListener(setHeader)
+		chrome.webRequest.onHeadersReceived.removeListener(setHeader)
+		chrome.webRequest.onBeforeRequest.removeListener(registerFrame)
 		if(!res.is_disabled)
 		{
 			theRegex = new RegExp(
@@ -18,28 +20,47 @@ function updateRegexpes()
 						.replace(/(^<all_urls>|\\\*)/g,"(.*?)")	// Allow wildcards
 						.replace(/^(.*)$/g,"^$1$")).join("|")	// User multi match
 				)
-			browser.webRequest.onHeadersReceived.addListener(
+			chrome.webRequest.onHeadersReceived.addListener(
 				setHeader,
 				{urls :["<all_urls>"], types:["sub_frame"]},
 				["blocking", "responseHeaders"]
+				);
+			chrome.webRequest.onBeforeRequest.addListener(
+				registerFrame,
+				{urls :["<all_urls>"], types:["sub_frame"]}
+				,[]
 			);
 		}
 	});
 }
+async function waitForPromise(e) {
+        let result = await Promise.resolve('this is a sample promise');
+}
+function registerFrame(e){
+	chrome.webNavigation.getFrame({
+				tabId: e.tabId,
+				frameId: e.parentFrameId
+		},frameInfo=>{
+			allowedFrames[e.requestId]=frameInfo;
+		})
+}
 function setHeader(e) {
-	if(e.frameAncestors[0].url.match(theRegex))
-	{
-		e.responseHeaders=e.responseHeaders.filter(x=>(headersdo[x.name.toLowerCase()]||Array)())
-	}
-  	return {responseHeaders: e.responseHeaders};
+	e.parentFrame = allowedFrames[e.requestId];
+	delete allowedFrames[e.requestId];
+	return {
+				responseHeaders:e.parentFrame.url.match(theRegex)
+				?e.responseHeaders.filter(x=>(headersdo[x.name.toLowerCase()]||Array)())
+				:e.responseHeaders
+			}
+	
 }
 updateRegexpes();
 var portFromCS;
 function connected(p) {
 	portFromCS = p;
 	portFromCS.onMessage.addListener(function(m) {
-			browser.storage.local.set(m,updateRegexpes);
+		chrome.storage.local.set(m,updateRegexpes);
 	});
 }
-browser.runtime.onConnect.addListener(connected);
+chrome.runtime.onConnect.addListener(connected);
 console.log("LOADED");
