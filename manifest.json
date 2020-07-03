@@ -5,11 +5,14 @@
   "description": "Allows all sites to be loaded in iframes, despite X-Frame-Options header settings.",
   "homepage_url": "https://github.com/ThomazPom/Moz-Ext-Ignore-X-Frame-Options",
   "icons": {
+    "38": "icons/38.png",
     "48": "icons/48.png",
-    "96": "icons/2x.png"
+    "96": "icons/96.png",
+    "128": "icons/128.png",
+    "626": "icons/logo.png"
   },
   "permissions": [
-    "<all_urls>", "webRequest", "webRequestBlocking","storage"]
+    "webRequest", "webRequestBlocking","storage"]
   ,
 
   "browser_action": {
