@@ -32,10 +32,7 @@ function updateRegexpes()
 			);
 		}
 	});
-}
-async function waitForPromise(e) {
-        let result = await Promise.resolve('this is a sample promise');
-}
+} 
 function registerFrame(e){
 	chrome.webNavigation.getFrame({
 				tabId: e.tabId,
