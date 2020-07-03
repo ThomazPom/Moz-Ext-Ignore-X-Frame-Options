@@ -14,7 +14,7 @@ The extension allows you to load remote content in iframes even if the server di
 - 1.5 : [Added parent domain whitelist](https://github.com/ThomazPom/Moz-Ext-Ignore-X-Frame-Options/issues/4)
 - 1.6 : Bugs and architectural issues fixes
 - 1.6.1 : On/off switch
-- 1.6.(2,3,4,5,6) : Bug fix
+- 1.6.(2-7) : Bug fix
 
 
 # Downloads
