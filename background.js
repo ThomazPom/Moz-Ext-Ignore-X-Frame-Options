@@ -22,12 +22,12 @@ function updateRegexpes()
 				)
 			chrome.webRequest.onHeadersReceived.addListener(
 				setHeader,
-				{urls :["<all_urls>"], types:["sub_frame"]},
+				{urls :["<all_urls>"], types:["sub_frame","object"]},
 				["blocking", "responseHeaders"]
 				);
 			chrome.webRequest.onBeforeRequest.addListener(
 				registerFrame,
-				{urls :["<all_urls>"], types:["sub_frame"]}
+				{urls :["<all_urls>"], types:["sub_frame","object"]}
 				,[]
 			);
 		}
