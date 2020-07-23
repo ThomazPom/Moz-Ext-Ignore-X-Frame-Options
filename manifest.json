@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Ignore X-Frame-Options",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "description": "Allows all sites to be loaded in iframes, despite X-Frame-Options header settings.",
   "icons": {
     "38": "icons/38.png",
