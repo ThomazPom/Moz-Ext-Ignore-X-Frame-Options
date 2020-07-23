@@ -20,7 +20,7 @@ function updateRegexpes()
 				)
 			browser.webRequest.onHeadersReceived.addListener(
 				setHeader,
-				{urls :["<all_urls>"], types:["sub_frame"]},
+				{urls :["<all_urls>"], types:["sub_frame","object"]},
 				["blocking", "responseHeaders"]
 			);
 		}
