@@ -26,12 +26,19 @@ function updateRegexpes()
 		}
 	});
 }
+
 function setHeader(e) {
-	if(e.frameAncestors[0].url.match(theRegex))
+	return new Promise((resolve, reject)=>
 	{
-		e.responseHeaders=e.responseHeaders.filter(x=>(headersdo[x.name.toLowerCase()]||Array)())
-	}
-  	return {responseHeaders: e.responseHeaders};
+		browser.webNavigation.getFrame({tabId:e.tabId,frameId:e.parentFrameId})
+		.then(parentFrame=>{
+			if(parentFrame.url.match(theRegex))
+			{
+				e.responseHeaders=e.responseHeaders.filter(x=>(headersdo[x.name.toLowerCase()]||Array)())
+			}
+		  	resolve({responseHeaders: e.responseHeaders});
+		})
+	})
 }
 updateRegexpes();
 var portFromCS;
