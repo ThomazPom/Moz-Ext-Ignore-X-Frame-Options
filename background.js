@@ -30,9 +30,29 @@ function updateRegexpes()
 function setHeader(e) {
 	return new Promise((resolve, reject)=>
 	{
-		browser.webNavigation.getFrame({tabId:e.tabId,frameId:e.parentFrameId})
-		.then(parentFrame=>{
-			if(parentFrame.url.match(theRegex))
+		var getEmbedderUrl;
+
+		if (e.type === "object" && e.tabId == -1)
+		{
+			getEmbedderUrl = new Promise((resolve, reject)=>
+			{
+				resolve(e.originUrl);
+			});
+		}
+		else
+		{
+			getEmbedderUrl = new Promise((resolve, reject)=>
+			{
+				browser.webNavigation.getFrame({tabId:e.tabId,frameId:e.parentFrameId})
+				.then(parentFrame=>
+				{
+					resolve(parentFrame.url);
+				});
+			});
+		}
+
+		getEmbedderUrl.then(url=>{
+			if(url.match(theRegex))
 			{
 				e.responseHeaders=e.responseHeaders.filter(x=>(headersdo[x.name.toLowerCase()]||Array)())
 			}
