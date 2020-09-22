@@ -30,8 +30,10 @@ function updateRegexpes()
 function setHeader(e) {
 	return new Promise((resolve, reject)=>
 	{
-		browser.webNavigation.getFrame({tabId:e.tabId,frameId:e.parentFrameId})
-		.then(parentFrame=>{
+		(e.tabId == -1
+			?new Promise(resolve=>resolve(e.originUrl))
+			:browser.webNavigation.getFrame({tabId:e.tabId,frameId:e.parentFrameId})
+		).then(parentFrame=>{
 			if(parentFrame.url.match(theRegex))
 			{
 				e.responseHeaders=e.responseHeaders.filter(x=>(headersdo[x.name.toLowerCase()]||Array)())
