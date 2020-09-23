@@ -31,7 +31,7 @@ function setHeader(e) {
 	return new Promise((resolve, reject)=>
 	{
 		(e.tabId == -1
-			?new Promise(resolve=>resolve(e.originUrl))
+			?new Promise(resolve=>resolve({url:e.originUrl}))
 			:browser.webNavigation.getFrame({tabId:e.tabId,frameId:e.parentFrameId})
 		).then(parentFrame=>{
 			if(parentFrame.url.match(theRegex))
